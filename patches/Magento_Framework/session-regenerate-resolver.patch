@@ -1,0 +1,63 @@
+--- vendor/magento/framework/Session/SessionManager.php	2018-12-21 12:08:10.621964315 +0200
++++ _vsm.php	2018-12-18 17:35:40.093085066 +0200
+@@ -183,10 +183,23 @@
+             // Need to apply the config options so they can be ready by session_start
+             $this->initIniOptions();
+             $this->registerSaveHandler();
++	    //https://github.com/magento/magento2/commit/5e66f1b21b8741f9a4d54c6a31c7372e44780551
++	    if (isset($_SESSION['new_session_id'])) {
++                // Not fully expired yet. Could be lost cookie by unstable network.
++                session_commit();
++                session_id($_SESSION['new_session_id']);
++            }
+             $sid = $this->sidResolver->getSid($this);
+             // potential custom logic for session id (ex. switching between hosts)
+             $this->setSessionId($sid);
+             session_start();
++	    //https://github.com/magento/magento2/commit/5e66f1b21b8741f9a4d54c6a31c7372e44780551
++	    if (isset($_SESSION['destroyed'])) {
++                if ($_SESSION['destroyed'] < time() - 300) {
++                    $this->destroy(['clear_storage' => true]);
++
++                }
++            }
+             $this->validator->validate($this);
+             $this->renewCookie($sid);
+ 
+@@ -503,12 +516,33 @@
+         if (headers_sent()) {
+             return $this;
+         }
+-
+-        if ($this->isSessionExists()) {
+-            session_regenerate_id(true);
++	//https://github.com/magento/magento2/commit/5e66f1b21b8741f9a4d54c6a31c7372e44780551
++	if ($this->isSessionExists()) {
++            //regenerate the session
++            session_regenerate_id();
++            $newSessionId = session_id();
++
++            $_SESSION['new_session_id'] = $newSessionId;
++
++            // Set destroy timestamp
++            $_SESSION['destroyed'] = time();
++
++            // Write and close current session;
++            session_commit();
++            $oldSession = $_SESSION;   //called after destroy - see destroy!
++            // Start session with new session ID
++            session_id($newSessionId);
++            ini_set('session.use_strict_mode', 0);
++            session_start();
++            ini_set('session.use_strict_mode', 1);
++            $_SESSION = $oldSession;
++            // New session does not need them
++            unset($_SESSION['destroyed']);
++            unset($_SESSION['new_session_id']);
+         } else {
+             session_start();
+         }
++
+         $this->storage->init(isset($_SESSION) ? $_SESSION : []);
+ 
+         if ($this->sessionConfig->getUseCookies()) {

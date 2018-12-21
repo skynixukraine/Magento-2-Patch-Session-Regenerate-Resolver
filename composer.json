@@ -1,0 +1,25 @@
+{
+    "name": "skynix/m2-session-issue",
+    "description": "Patch for core Magento2",
+    "authors": [
+        {
+            "name": "Skynix",
+            "email": "apps@skynix.co"
+        }
+    ],
+    "require": {
+        "skynix/m2-session-issue": "0.0.1"
+    },
+    "extra": {
+        "patches": {
+            "magento/framework": {
+                "Solving the problem of emptying the cart for guests and the regeneration of the session": {
+                    "source" : "patches/Magento_Framework/session-regenerate-resolver.patch",
+                    "version" : [
+                        "101.0.4"
+                    ]
+                }
+            }
+        }
+    }
+}
