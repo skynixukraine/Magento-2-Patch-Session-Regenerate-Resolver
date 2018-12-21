@@ -31,7 +31,7 @@ Then on composer install you will see the patch applied:
 ```
 Processing patches configuration
   - Applying patches for magento/framework (1)
-    ~ skynixukraine/Magento-2-Patch-Session-Regenerate-Resolver: patches/Magento_ModuleName/magento2-issue-ISSUENUMBER.patch [NEW]
+    ~ skynix/m2-session-issue: patches/Magento_ModuleName/magento2-issue-ISSUENUMBER.patch [NEW]
       Excellent description of the issue which people will see on composer install
 
 Writing patch info to install file
