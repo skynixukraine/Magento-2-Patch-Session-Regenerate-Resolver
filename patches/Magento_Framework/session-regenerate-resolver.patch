@@ -1,5 +1,4 @@
 diff --git a/vendor/magento/framework/Session/SessionManager.php b/vendor/magento/framework/Session/SessionManager.php
-index f363ffe70e80..599406f45528 100644
 --- a/vendor/magento/framework/Session/SessionManager.php
 +++ b/vendor/magento/framework/Session/SessionManager.php
 @@ -183,10 +183,23 @@

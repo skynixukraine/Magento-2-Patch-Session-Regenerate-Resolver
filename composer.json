@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "skynix/m2-session-issue": "0.0.1"
+        "vaimo/composer-patches": "^3.24.1"
     },
     "extra": {
         "patches": {
