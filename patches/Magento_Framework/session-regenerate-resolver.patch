@@ -1,5 +1,7 @@
---- vendor/magento/framework/Session/SessionManager.php	2018-12-21 12:08:10.621964315 +0200
-+++ _vsm.php	2018-12-18 17:35:40.093085066 +0200
+diff --git a/vendor/magento/framework/Session/SessionManager.php b/vendor/magento/framework/Session/SessionManager.php
+index f363ffe70e80..599406f45528 100644
+--- a/vendor/magento/framework/Session/SessionManager.php
++++ b/vendor/magento/framework/Session/SessionManager.php
 @@ -183,10 +183,23 @@
              // Need to apply the config options so they can be ready by session_start
              $this->initIniOptions();
