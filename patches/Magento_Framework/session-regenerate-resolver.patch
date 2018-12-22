@@ -1,6 +1,5 @@
-diff --git a/vendor/magento/framework/Session/SessionManager.php b/vendor/magento/framework/Session/SessionManager.php
---- a/vendor/magento/framework/Session/SessionManager.php
-+++ b/vendor/magento/framework/Session/SessionManager.php
+--- a/Session/SessionManager.php
++++ b/Session/SessionManager.php
 @@ -183,10 +183,23 @@
              // Need to apply the config options so they can be ready by session_start
              $this->initIniOptions();
